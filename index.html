@@ -2,10 +2,50 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <meta http-equiv="refresh" content="0; url=privacy-policy.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>AgriTrack Mini — Pages légales</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #f8f6f0;
+      color: #333;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    h1 { font-size: 1.3rem; font-weight: 700; color: #3d5a3b; margin-bottom: 8px; }
+    p { font-size: 0.85rem; color: #999; margin-bottom: 32px; }
+    .links { display: flex; flex-direction: column; gap: 12px; width: 100%; max-width: 320px; }
+    a {
+      display: block;
+      background: #3d5a3b;
+      color: white;
+      text-align: center;
+      padding: 14px 20px;
+      border-radius: 10px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      text-decoration: none;
+    }
+    a:hover { background: #2e4530; }
+    a.secondary {
+      background: white;
+      color: #3d5a3b;
+      border: 1.5px solid #3d5a3b;
+    }
+    a.secondary:hover { background: #e8f5e9; }
+  </style>
 </head>
 <body>
-  <p><a href="privacy-policy.html">Politique de confidentialité</a></p>
+  <h1>AgriTrack Mini</h1>
+  <p>Pages légales et support</p>
+  <div class="links">
+    <a href="support.html">Support</a>
+    <a href="privacy-policy.html" class="secondary">Politique de confidentialité</a>
+  </div>
 </body>
 </html>
