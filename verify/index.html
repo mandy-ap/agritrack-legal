@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Vérification — AgriTrack Classic</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #f5f5f0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 24px;
+    }
+    .card {
+      background: white;
+      border-radius: 16px;
+      padding: 40px 32px;
+      max-width: 420px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+    }
+    .icon { font-size: 56px; margin-bottom: 20px; }
+    h1 { font-size: 24px; font-weight: 700; color: #2d5016; margin-bottom: 12px; }
+    p { font-size: 16px; color: #666; line-height: 1.5; margin-bottom: 24px; }
+    .btn {
+      display: inline-block;
+      background: #2d5016;
+      color: white;
+      text-decoration: none;
+      padding: 14px 28px;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: 600;
+    }
+    .error { color: #c0392b; }
+  </style>
+</head>
+<body>
+  <div class="card" id="loading">
+    <div class="icon">⏳</div>
+    <h1>Vérification en cours…</h1>
+    <p>Redirection vers l'application AgriTrack Classic.</p>
+  </div>
+
+  <div class="card" id="success" style="display:none">
+    <div class="icon">✅</div>
+    <h1>Courriel vérifié !</h1>
+    <p>Votre adresse courriel a été vérifiée. Si l'application ne s'ouvre pas automatiquement, appuyez sur le bouton ci-dessous.</p>
+    <a class="btn" id="openApp" href="#">Ouvrir AgriTrack Classic</a>
+  </div>
+
+  <div class="card" id="error" style="display:none">
+    <div class="icon">❌</div>
+    <h1 class="error">Lien invalide</h1>
+    <p>Ce lien de vérification est invalide ou expiré. Veuillez en demander un nouveau depuis l'application.</p>
+  </div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const userId = params.get('userId');
+    const secret = params.get('secret');
+
+    function show(id) {
+      ['loading', 'success', 'error'].forEach(function(n) {
+        document.getElementById(n).style.display = n === id ? '' : 'none';
+      });
+    }
+
+    if (!userId || !secret) {
+      show('error');
+    } else {
+      var deepLink = 'agritrack-classic://verify?userId=' + encodeURIComponent(userId) + '&secret=' + encodeURIComponent(secret);
+      document.getElementById('openApp').href = deepLink;
+
+      // Redirect to the app immediately
+      window.location.href = deepLink;
+
+      // After a short delay, show the manual button in case the redirect didn't work
+      setTimeout(function() {
+        show('success');
+      }, 1500);
+    }
+  </script>
+</body>
+</html>
