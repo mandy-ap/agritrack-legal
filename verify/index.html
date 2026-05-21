@@ -26,44 +26,32 @@
     }
     .icon { font-size: 56px; margin-bottom: 20px; }
     h1 { font-size: 24px; font-weight: 700; color: #2d5016; margin-bottom: 12px; }
-    p { font-size: 16px; color: #666; line-height: 1.5; margin-bottom: 24px; }
-    .btn {
-      display: inline-block;
-      background: #2d5016;
-      color: white;
-      text-decoration: none;
-      padding: 14px 28px;
-      border-radius: 10px;
-      font-size: 16px;
-      font-weight: 600;
-    }
-    .error { color: #c0392b; }
+    p { font-size: 16px; color: #666; line-height: 1.5; }
+    .error h1 { color: #c0392b; }
   </style>
 </head>
 <body>
   <div class="card" id="loading">
     <div class="icon">⏳</div>
     <h1>Vérification en cours…</h1>
-    <p>Redirection vers l'application AgriTrack Classic.</p>
+    <p>Veuillez patienter un instant.</p>
   </div>
 
   <div class="card" id="success" style="display:none">
     <div class="icon">✅</div>
     <h1>Courriel vérifié !</h1>
-    <p>Votre adresse courriel a été vérifiée. Si l'application ne s'ouvre pas automatiquement, appuyez sur le bouton ci-dessous.</p>
-    <a class="btn" id="openApp" href="#">Ouvrir AgriTrack Classic</a>
+    <p>Votre adresse courriel a été vérifiée avec succès. Vous pouvez maintenant retourner dans l'application AgriTrack Classic pour continuer.</p>
   </div>
 
-  <div class="card" id="error" style="display:none">
+  <div class="card error" id="error" style="display:none">
     <div class="icon">❌</div>
-    <h1 class="error">Lien invalide</h1>
-    <p>Ce lien de vérification est invalide ou expiré. Veuillez en demander un nouveau depuis l'application.</p>
+    <h1>Lien invalide</h1>
+    <p>Ce lien de vérification est invalide, expiré ou a déjà été utilisé. Retournez dans l'application et demandez un nouveau lien de vérification.</p>
   </div>
 
   <script>
-    const params = new URLSearchParams(window.location.search);
-    const userId = params.get('userId');
-    const secret = params.get('secret');
+    var ENDPOINT = 'https://tor.cloud.appwrite.io/v1';
+    var PROJECT_ID = '6a010b7f001da52181b8';
 
     function show(id) {
       ['loading', 'success', 'error'].forEach(function(n) {
@@ -71,19 +59,31 @@
       });
     }
 
+    var params = new URLSearchParams(window.location.search);
+    var userId = params.get('userId');
+    var secret = params.get('secret');
+
     if (!userId || !secret) {
       show('error');
     } else {
-      var deepLink = 'agritrack-classic://verify?userId=' + encodeURIComponent(userId) + '&secret=' + encodeURIComponent(secret);
-      document.getElementById('openApp').href = deepLink;
-
-      // Redirect to the app immediately
-      window.location.href = deepLink;
-
-      // After a short delay, show the manual button in case the redirect didn't work
-      setTimeout(function() {
-        show('success');
-      }, 1500);
+      fetch(ENDPOINT + '/account/verification', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Appwrite-Project': PROJECT_ID,
+        },
+        body: JSON.stringify({ userId: userId, secret: secret }),
+      })
+      .then(function(res) {
+        if (res.ok) {
+          show('success');
+        } else {
+          show('error');
+        }
+      })
+      .catch(function() {
+        show('error');
+      });
     }
   </script>
 </body>
