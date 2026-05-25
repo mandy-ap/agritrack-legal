@@ -12,14 +12,8 @@
       color: #333;
       padding: 24px 16px 48px;
     }
-    .container {
-      max-width: 720px;
-      margin: 0 auto;
-    }
-    header {
-      text-align: center;
-      margin-bottom: 32px;
-    }
+    .container { max-width: 720px; margin: 0 auto; }
+    header { text-align: center; margin-bottom: 32px; }
     .logo-badge {
       display: inline-block;
       background: #2d5016;
@@ -29,79 +23,49 @@
       letter-spacing: 0.5px;
       padding: 4px 14px;
       border-radius: 20px;
-      margin-bottom: 12px;
+      margin-bottom: 14px;
     }
-    h1 {
-      font-size: 26px;
-      font-weight: 700;
-      color: #2d5016;
-      margin-bottom: 6px;
-    }
-    .updated {
-      font-size: 13px;
-      color: #888;
-    }
+    header h1 { font-size: 26px; font-weight: 800; color: #2d5016; margin-bottom: 6px; }
+    .updated { font-size: 13px; color: #999; text-align: center; margin-bottom: 24px; }
     .highlight {
-      background: #e8f5e9;
+      background: #f0f7e8;
       border-left: 4px solid #2d5016;
       border-radius: 8px;
       padding: 16px 20px;
-      margin: 24px 0;
-      font-size: 15px;
-      color: #2d5016;
-      font-weight: 600;
-      line-height: 1.5;
+      margin-bottom: 28px;
+      font-size: 14px;
+      color: #3a5c1a;
+      line-height: 1.6;
     }
-    .card {
-      background: white;
-      border-radius: 12px;
-      padding: 24px;
-      margin-bottom: 16px;
-      box-shadow: 0 1px 6px rgba(0,0,0,0.07);
-    }
-    h2 {
+    .section { margin-bottom: 28px; }
+    .section h2 {
       font-size: 16px;
       font-weight: 700;
       color: #2d5016;
-      border-bottom: 1px solid #e5e5e5;
-      padding-bottom: 8px;
+      border-bottom: 1px solid #e0e0d8;
+      padding-bottom: 6px;
       margin-bottom: 12px;
     }
-    p {
+    .section h3 {
       font-size: 14px;
-      color: #555;
-      line-height: 1.7;
-      margin-bottom: 10px;
+      font-weight: 700;
+      color: #1a1a1a;
+      margin: 12px 0 6px;
     }
-    p:last-child { margin-bottom: 0; }
-    ul {
-      list-style: none;
-      padding: 0;
-      margin: 8px 0;
-    }
+    p { font-size: 14px; color: #555; line-height: 1.7; margin-bottom: 8px; }
+    ul { padding-left: 0; list-style: none; margin-bottom: 8px; }
     ul li {
       font-size: 14px;
       color: #555;
-      line-height: 1.7;
-      padding-left: 18px;
+      line-height: 1.6;
+      padding: 4px 0 4px 20px;
       position: relative;
-      margin-bottom: 4px;
     }
-    ul li::before {
-      content: '•';
-      color: #2d5016;
-      position: absolute;
-      left: 0;
-    }
-    strong { color: #222; }
-    a { color: #2d5016; }
-    .email { color: #2d5016; font-weight: 600; }
-    footer {
-      text-align: center;
-      font-size: 12px;
-      color: #aaa;
-      margin-top: 32px;
-    }
+    ul li::before { content: '•'; position: absolute; left: 6px; color: #2d5016; }
+    a.email { color: #2d5016; font-weight: 600; }
+    footer { text-align: center; margin-top: 40px; font-size: 13px; color: #aaa; }
+    footer a { color: #2d5016; text-decoration: none; }
+    footer p + p { margin-top: 8px; }
   </style>
 </head>
 <body>
@@ -109,19 +73,20 @@
     <header>
       <div class="logo-badge">AgriTrack Classic</div>
       <h1>Politique de confidentialité</h1>
-      <p class="updated">Dernière mise à jour : mai 2026 — Version 2.0</p>
     </header>
+
+    <p class="updated">Dernière mise à jour : mai 2026 — Version 2.0</p>
 
     <div class="highlight">
       AgriTrack Classic est une application infonuagique. Vos données sont stockées de façon sécurisée sur des serveurs situés au Canada (Appwrite Cloud). Un compte utilisateur est requis pour utiliser l'Application.
     </div>
 
-    <div class="card">
+    <div class="section">
       <h2>1. Responsable du traitement</h2>
-      <p>AgriTrack Classic est développée et maintenue par son auteur (ci-après « nous »). Pour toute question relative à la présente politique, contactez-nous à : <a href="mailto:support@agritrack.ca" class="email">support@agritrack.ca</a></p>
+      <p>AgriTrack Classic est développée et maintenue par Codimpact. Pour toute question relative à la présente politique, contactez-nous à : <a class="email" href="mailto:agritrack@codimpact.ca">agritrack@codimpact.ca</a></p>
     </div>
 
-    <div class="card">
+    <div class="section">
       <h2>2. Données collectées</h2>
       <p>Pour utiliser AgriTrack Classic, vous devez créer un compte. Les données suivantes sont collectées et traitées :</p>
       <ul>
@@ -133,7 +98,7 @@
       </ul>
     </div>
 
-    <div class="card">
+    <div class="section">
       <h2>3. Données NON collectées</h2>
       <p>AgriTrack Classic ne collecte pas :</p>
       <ul>
@@ -145,7 +110,7 @@
       </ul>
     </div>
 
-    <div class="card">
+    <div class="section">
       <h2>4. Finalités du traitement</h2>
       <p>Vos données sont utilisées uniquement pour :</p>
       <ul>
@@ -157,23 +122,23 @@
       </ul>
     </div>
 
-    <div class="card">
+    <div class="section">
       <h2>5. Services tiers</h2>
       <p>AgriTrack Classic utilise les services suivants :</p>
       <ul>
-        <li><strong>Appwrite Cloud</strong> — Hébergement infonuagique, authentification et base de données. Serveurs situés à Toronto, Canada (tor.cloud.appwrite.io). Politique de confidentialité : <a href="https://appwrite.io/privacy" target="_blank">appwrite.io/privacy</a></li>
-        <li><strong>RevenueCat</strong> — Gestion des abonnements in-app. Seul un identifiant client anonymisé est transmis. Politique de confidentialité : <a href="https://www.revenuecat.com/privacy" target="_blank">revenuecat.com/privacy</a></li>
+        <li><strong>Appwrite Cloud</strong> — Hébergement infonuagique, authentification et base de données. Serveurs situés à Toronto, Canada (tor.cloud.appwrite.io). Politique de confidentialité : appwrite.io/privacy</li>
+        <li><strong>RevenueCat</strong> — Gestion des abonnements in-app. Seul un identifiant client anonymisé est transmis. Politique de confidentialité : revenuecat.com/privacy</li>
         <li><strong>Apple App Store / Google Play</strong> — Distribution de l'Application et traitement des paiements d'abonnement. Leurs politiques respectives s'appliquent aux transactions.</li>
       </ul>
-      <p>Aucun outil d'analyse comportementale, réseau publicitaire ni outil de suivi tiers ne sont intégrés dans l'Application.</p>
+      <p>Aucun outil d'analyse comportementale, réseau publicitaire ou outil de suivi tiers ne sont intégrés dans l'Application.</p>
     </div>
 
-    <div class="card">
+    <div class="section">
       <h2>6. Connexion réseau requise</h2>
       <p>AgriTrack Classic est un service infonuagique et nécessite une connexion Internet pour fonctionner. La création de compte, la connexion, la synchronisation des données et la gestion de l'abonnement requièrent un accès réseau.</p>
     </div>
 
-    <div class="card">
+    <div class="section">
       <h2>7. Sécurité des données</h2>
       <p>Nous mettons en œuvre les mesures de sécurité suivantes :</p>
       <ul>
@@ -185,46 +150,51 @@
       </ul>
     </div>
 
-    <div class="card">
+    <div class="section">
       <h2>8. Droits des utilisateurs (Loi 25 / LPRPSP)</h2>
-      <p>Conformément à la Loi sur la protection des renseignements personnels dans le secteur privé (RLRQ, c. P-39.1, telle que modifiée par la Loi 25) :</p>
       <ul>
         <li><strong>Droit d'accès</strong> : toutes vos données sont visibles directement dans l'Application</li>
         <li><strong>Droit de rectification</strong> : vous pouvez modifier vos données à tout moment dans l'Application</li>
         <li><strong>Droit à l'effacement</strong> : la fonction « Supprimer toutes les données » dans Paramètres supprime l'intégralité de vos données des serveurs Appwrite et efface votre compte de façon permanente et irréversible</li>
-        <li><strong>Droit à la portabilité</strong> : contactez-nous à support@agritrack.ca pour une exportation complète de vos données</li>
+        <li><strong>Droit à la portabilité</strong> : contactez-nous à <a class="email" href="mailto:agritrack@codimpact.ca">agritrack@codimpact.ca</a> pour une exportation complète de vos données</li>
         <li><strong>Droit de retirer votre consentement</strong> : vous pouvez supprimer votre compte à tout moment via la fonction ci-dessus</li>
       </ul>
-      <p>Pour exercer vos droits : <a href="mailto:support@agritrack.ca" class="email">support@agritrack.ca</a></p>
+      <p>Pour exercer vos droits, contactez-nous à : <a class="email" href="mailto:agritrack@codimpact.ca">agritrack@codimpact.ca</a></p>
     </div>
 
-    <div class="card">
+    <div class="section">
       <h2>9. Conservation des données</h2>
-      <p>Vos données sont conservées tant que votre compte est actif. Lors de la suppression de votre compte via l'Application, l'ensemble de vos données est effacé de nos serveurs de façon immédiate et permanente.</p>
+      <p>Vos données sont conservées tant que votre compte est actif. Lors de la suppression de votre compte, l'ensemble de vos données est effacé de nos serveurs de façon immédiate et permanente. Aucune conservation de sauvegarde n'est effectuée après la suppression.</p>
     </div>
 
-    <div class="card">
+    <div class="section">
       <h2>10. Notification en cas d'incident</h2>
       <p>En cas d'atteinte à la confidentialité de vos renseignements personnels présentant un risque de préjudice sérieux, nous vous en aviserons dans les meilleurs délais conformément aux obligations prévues par la Loi 25 et nous déclarerons l'incident à la Commission d'accès à l'information du Québec.</p>
     </div>
 
-    <div class="card">
+    <div class="section">
       <h2>11. Enfants</h2>
       <p>AgriTrack Classic est destinée à un usage professionnel agricole pour les personnes de 13 ans et plus. Nous ne collectons pas sciemment de données personnelles concernant des enfants de moins de 13 ans.</p>
     </div>
 
-    <div class="card">
+    <div class="section">
       <h2>12. Modifications de la politique</h2>
-      <p>Nous nous réservons le droit de modifier la présente politique à tout moment. Les modifications seront publiées dans l'Application avec une date de mise à jour. L'utilisation continue de l'Application vaut acceptation des modifications.</p>
+      <p>Nous nous réservons le droit de modifier la présente politique à tout moment. Les modifications seront publiées dans l'Application avec une date de mise à jour. L'utilisation continue de l'Application après toute modification vaut acceptation des nouvelles conditions.</p>
     </div>
 
-    <div class="card">
+    <div class="section">
       <h2>13. Contact</h2>
-      <p>Pour toute question concernant la présente politique de confidentialité :<br>
-      <a href="mailto:support@agritrack.ca" class="email">support@agritrack.ca</a></p>
+      <p>Pour toute question concernant la présente politique : <a class="email" href="mailto:agritrack@codimpact.ca">agritrack@codimpact.ca</a></p>
     </div>
 
-    <footer>© 2026 AgriTrack Classic. Tous droits réservés.</footer>
+    <footer>
+      <p>
+        <a href="../support/">Support</a>
+        &nbsp;·&nbsp;
+        <a href="../conditions-utilisation/">Conditions d'utilisation</a>
+      </p>
+      <p>© 2026 AgriTrack Classic — Codimpact</p>
+    </footer>
   </div>
 </body>
 </html>
