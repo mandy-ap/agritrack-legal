@@ -26,24 +26,49 @@
     }
     .icon { font-size: 56px; margin-bottom: 20px; }
     h1 { font-size: 24px; font-weight: 700; color: #2d5016; margin-bottom: 12px; }
-    p { font-size: 16px; color: #666; line-height: 1.5; margin-bottom: 20px; }
+    p { font-size: 16px; color: #666; line-height: 1.5; margin-bottom: 24px; }
     .btn {
       display: inline-block;
       background: #3d5a3b;
       color: white;
+      padding: 16px 32px;
+      border-radius: 12px;
+      text-decoration: none;
+      font-size: 17px;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      width: 100%;
+    }
+    .btn:disabled { background: #aaa; cursor: not-allowed; }
+    .btn-secondary {
+      display: inline-block;
+      background: transparent;
+      color: #3d5a3b;
       padding: 14px 28px;
       border-radius: 10px;
       text-decoration: none;
       font-size: 16px;
       font-weight: 600;
+      border: 2px solid #3d5a3b;
+      margin-top: 12px;
+      width: 100%;
     }
     .error h1 { color: #c0392b; }
   </style>
 </head>
 <body>
+  <!-- Étape 1 : l'utilisateur doit cliquer (les pré-fetchers des clients email ne cliquent pas) -->
+  <div class="card" id="landing" style="display:none">
+    <div class="icon">📬</div>
+    <h1>Vérifier votre courriel</h1>
+    <p>Cliquez sur le bouton ci-dessous pour confirmer votre adresse courriel AgriTrack Classic.</p>
+    <button class="btn" id="verifyBtn" onclick="doVerify()">Vérifier mon courriel</button>
+  </div>
+
   <div class="card" id="loading">
     <div class="icon">⏳</div>
-    <h1>Vérification en cours…</h1>
+    <h1>Chargement…</h1>
     <p>Veuillez patienter un instant.</p>
   </div>
 
@@ -51,7 +76,7 @@
     <div class="icon">✅</div>
     <h1>Courriel vérifié !</h1>
     <p>Votre adresse courriel a été vérifiée avec succès. Retournez dans AgriTrack Classic et appuyez sur <strong>« J'ai vérifié mon courriel »</strong> pour continuer.</p>
-    <a class="btn" href="agritrack-classic:///">Ouvrir AgriTrack Classic</a>
+    <a class="btn-secondary" href="agritrack-classic:///">Ouvrir AgriTrack Classic</a>
   </div>
 
   <div class="card error" id="error" style="display:none">
@@ -65,7 +90,7 @@
     var PROJECT_ID = '6a010b7f001da52181b8';
 
     function show(id) {
-      ['loading', 'success', 'error'].forEach(function(n) {
+      ['landing', 'loading', 'success', 'error'].forEach(function(n) {
         document.getElementById(n).style.display = n === id ? '' : 'none';
       });
     }
@@ -77,6 +102,18 @@
     if (!userId || !secret) {
       show('error');
     } else {
+      // Show the landing card — user must click to trigger verification.
+      // Pre-fetchers from email clients cannot click buttons, so the token
+      // is preserved until the real user interacts with the page.
+      show('landing');
+    }
+
+    function doVerify() {
+      var btn = document.getElementById('verifyBtn');
+      btn.disabled = true;
+      btn.textContent = 'Vérification…';
+      show('loading');
+
       fetch(ENDPOINT + '/account/verification', {
         method: 'PUT',
         headers: {
@@ -90,20 +127,16 @@
           show('success');
           return;
         }
-        // Check the error type — some failures still mean the email is verified
         return res.json().then(function(body) {
+          // If the email is already verified (e.g. clicked twice), treat as success.
           if (body && body.type === 'user_email_already_verified') {
             show('success');
           } else {
             show('error');
           }
-        }).catch(function() {
-          show('error');
-        });
+        }).catch(function() { show('error'); });
       })
-      .catch(function() {
-        show('error');
-      });
+      .catch(function() { show('error'); });
     }
   </script>
 </body>
