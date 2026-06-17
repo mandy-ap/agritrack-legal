@@ -26,35 +26,44 @@
     }
     .icon { font-size: 56px; margin-bottom: 20px; }
     h1 { font-size: 24px; font-weight: 700; color: #2d5016; margin-bottom: 12px; }
-    p { font-size: 16px; color: #666; line-height: 1.5; }
+    p { font-size: 16px; color: #666; line-height: 1.5; margin-bottom: 16px; }
+    .btn {
+      display: inline-block;
+      background: #3d5a3b;
+      color: white;
+      padding: 14px 28px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-size: 16px;
+      font-weight: 600;
+      margin-top: 8px;
+    }
     .error h1 { color: #c0392b; }
   </style>
 </head>
 <body>
   <div class="card" id="loading">
     <div class="icon">⏳</div>
-    <h1>Vérification en cours…</h1>
+    <h1>Redirection en cours…</h1>
     <p>Veuillez patienter un instant.</p>
   </div>
 
-  <div class="card" id="success" style="display:none">
-    <div class="icon">✅</div>
-    <h1>Courriel vérifié !</h1>
-    <p>Votre adresse courriel a été vérifiée avec succès. Vous pouvez maintenant retourner dans l'application AgriTrack Classic pour continuer.</p>
+  <div class="card" id="redirect" style="display:none">
+    <div class="icon">📱</div>
+    <h1>Ouvrir l'application</h1>
+    <p>Touchez le bouton ci-dessous pour retourner dans AgriTrack Classic et finaliser la vérification.</p>
+    <a id="deepLinkBtn" class="btn" href="#">Ouvrir AgriTrack Classic</a>
   </div>
 
   <div class="card error" id="error" style="display:none">
     <div class="icon">❌</div>
     <h1>Lien invalide</h1>
-    <p>Ce lien de vérification est invalide, expiré ou a déjà été utilisé. Retournez dans l'application et demandez un nouveau lien de vérification.</p>
+    <p>Ce lien de vérification est invalide ou expiré. Retournez dans l'application et demandez un nouveau lien de vérification.</p>
   </div>
 
   <script>
-    var ENDPOINT = 'https://tor.cloud.appwrite.io/v1';
-    var PROJECT_ID = '6a010b7f001da52181b8';
-
     function show(id) {
-      ['loading', 'success', 'error'].forEach(function(n) {
+      ['loading', 'redirect', 'error'].forEach(function(n) {
         document.getElementById(n).style.display = n === id ? '' : 'none';
       });
     }
@@ -66,24 +75,14 @@
     if (!userId || !secret) {
       show('error');
     } else {
-      fetch(ENDPOINT + '/account/verification', {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-Appwrite-Project': PROJECT_ID,
-        },
-        body: JSON.stringify({ userId: userId, secret: secret }),
-      })
-      .then(function(res) {
-        if (res.ok) {
-          show('success');
-        } else {
-          show('error');
-        }
-      })
-      .catch(function() {
-        show('error');
-      });
+      var deepLink = 'agritrack-classic:///verify?userId=' + encodeURIComponent(userId) + '&secret=' + encodeURIComponent(secret);
+      document.getElementById('deepLinkBtn').href = deepLink;
+
+      // Attempt automatic redirect; fall back to manual button after 1.5 s
+      window.location.href = deepLink;
+      setTimeout(function() {
+        show('redirect');
+      }, 1500);
     }
   </script>
 </body>
