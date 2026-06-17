@@ -26,7 +26,7 @@
     }
     .icon { font-size: 56px; margin-bottom: 20px; }
     h1 { font-size: 24px; font-weight: 700; color: #2d5016; margin-bottom: 12px; }
-    p { font-size: 16px; color: #666; line-height: 1.5; margin-bottom: 16px; }
+    p { font-size: 16px; color: #666; line-height: 1.5; margin-bottom: 20px; }
     .btn {
       display: inline-block;
       background: #3d5a3b;
@@ -36,7 +36,6 @@
       text-decoration: none;
       font-size: 16px;
       font-weight: 600;
-      margin-top: 8px;
     }
     .error h1 { color: #c0392b; }
   </style>
@@ -44,15 +43,15 @@
 <body>
   <div class="card" id="loading">
     <div class="icon">⏳</div>
-    <h1>Redirection en cours…</h1>
+    <h1>Vérification en cours…</h1>
     <p>Veuillez patienter un instant.</p>
   </div>
 
-  <div class="card" id="redirect" style="display:none">
-    <div class="icon">📱</div>
-    <h1>Ouvrir l'application</h1>
-    <p>Touchez le bouton ci-dessous pour retourner dans AgriTrack Classic et finaliser la vérification.</p>
-    <a id="deepLinkBtn" class="btn" href="#">Ouvrir AgriTrack Classic</a>
+  <div class="card" id="success" style="display:none">
+    <div class="icon">✅</div>
+    <h1>Courriel vérifié !</h1>
+    <p>Votre adresse courriel a été vérifiée avec succès. Retournez dans AgriTrack Classic et appuyez sur <strong>« J'ai vérifié mon courriel »</strong> pour continuer.</p>
+    <a class="btn" href="agritrack-classic:///">Ouvrir AgriTrack Classic</a>
   </div>
 
   <div class="card error" id="error" style="display:none">
@@ -62,8 +61,11 @@
   </div>
 
   <script>
+    var ENDPOINT = 'https://tor.cloud.appwrite.io/v1';
+    var PROJECT_ID = '6a010b7f001da52181b8';
+
     function show(id) {
-      ['loading', 'redirect', 'error'].forEach(function(n) {
+      ['loading', 'success', 'error'].forEach(function(n) {
         document.getElementById(n).style.display = n === id ? '' : 'none';
       });
     }
@@ -75,14 +77,33 @@
     if (!userId || !secret) {
       show('error');
     } else {
-      var deepLink = 'agritrack-classic:///verify?userId=' + encodeURIComponent(userId) + '&secret=' + encodeURIComponent(secret);
-      document.getElementById('deepLinkBtn').href = deepLink;
-
-      // Attempt automatic redirect; fall back to manual button after 1.5 s
-      window.location.href = deepLink;
-      setTimeout(function() {
-        show('redirect');
-      }, 1500);
+      fetch(ENDPOINT + '/account/verification', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Appwrite-Project': PROJECT_ID,
+        },
+        body: JSON.stringify({ userId: userId, secret: secret }),
+      })
+      .then(function(res) {
+        if (res.ok) {
+          show('success');
+          return;
+        }
+        // Check the error type — some failures still mean the email is verified
+        return res.json().then(function(body) {
+          if (body && body.type === 'user_email_already_verified') {
+            show('success');
+          } else {
+            show('error');
+          }
+        }).catch(function() {
+          show('error');
+        });
+      })
+      .catch(function() {
+        show('error');
+      });
     }
   </script>
 </body>
